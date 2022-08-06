@@ -32,8 +32,7 @@ class _UploadPictureWidgetState extends State<UploadPictureWidget> {
   @override
   void initState() {
     super.initState();
-    bioTextFieldController = TextEditingController(
-        text: valueOrDefault(currentUserDocument?.bio, ''));
+    bioTextFieldController = TextEditingController();
     nameTextFieldController =
         TextEditingController(text: currentUserDisplayName);
     websiteTextFieldController = TextEditingController(
@@ -425,56 +424,51 @@ class _UploadPictureWidgetState extends State<UploadPictureWidget> {
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 5, 0, 0),
-                                    child: AuthUserStreamWidget(
-                                      child: TextFormField(
-                                        controller: bioTextFieldController,
-                                        autofocus: true,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelText: 'Bio',
-                                          hintText: 'Descripe yourself',
-                                          hintStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                              topLeft: Radius.circular(4.0),
-                                              topRight: Radius.circular(4.0),
-                                            ),
-                                          ),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                              topLeft: Radius.circular(4.0),
-                                              topRight: Radius.circular(4.0),
-                                            ),
-                                          ),
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                    child: TextFormField(
+                                      controller: bioTextFieldController,
+                                      autofocus: true,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        labelText: 'Bio',
+                                        hintText: 'Descripe yourself',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .bodyText2
                                             .override(
                                               fontFamily: 'Poppins',
-                                              fontSize: 16,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
                                               fontWeight: FontWeight.normal,
                                             ),
-                                        maxLines: 4,
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(4.0),
+                                            topRight: Radius.circular(4.0),
+                                          ),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(4.0),
+                                            topRight: Radius.circular(4.0),
+                                          ),
+                                        ),
                                       ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      maxLines: 4,
                                     ),
                                   ),
                                   StreamBuilder<List<LocationsRecord>>(
