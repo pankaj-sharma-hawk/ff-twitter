@@ -26,8 +26,14 @@ class TypeAheadWidget extends StatefulWidget {
 }
 
 class _TypeAheadWidgetState extends State<TypeAheadWidget> {
-  final TextEditingController _typeAheadController = TextEditingController();
+  TextEditingController? _typeAheadController;
   String? _selectedCity;
+
+  @override
+  void initState() {
+    super.initState();
+    _typeAheadController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
