@@ -30,3 +30,11 @@ bool isCreateAccountEmpty(
 String getUserHandleFromEmail(String emailId) {
   return emailId.split("@")[0];
 }
+
+bool isStringEmpty(String? value) {
+  // Add your function code here!
+  if (value == null || value.isEmpty) {
+    return true;
+  }
+  return false;
+}

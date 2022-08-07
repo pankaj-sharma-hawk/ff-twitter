@@ -44,6 +44,10 @@ class FFAppState {
   bool localTip = false;
 
   DateTime? localDate;
+
+  String localHost = '';
+
+  String localPort = '';
 }
 
 LatLng? _latLngFromString(String? val) {

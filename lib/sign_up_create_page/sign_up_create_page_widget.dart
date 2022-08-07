@@ -45,7 +45,7 @@ class _SignUpCreatePageWidgetState extends State<SignUpCreatePageWidget> {
   @override
   void initState() {
     super.initState();
-    emailFieldController = TextEditingController(text: widget.emailId);
+    emailFieldController = TextEditingController(text: 'Initial Value');
     nameFieldController = TextEditingController(text: widget.userName);
     passwordFieldController = TextEditingController(text: widget.password);
     passwordFieldVisibility = false;

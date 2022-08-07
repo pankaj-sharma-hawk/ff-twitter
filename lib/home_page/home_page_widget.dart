@@ -658,484 +658,598 @@ class _HomePageWidgetState extends State<HomePageWidget>
               ),
             ),
           ),
-          body: GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Material(
-                            color: Colors.transparent,
-                            elevation: 1,
-                            child: Container(
-                              width: double.infinity,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 4,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    offset: Offset(0, 2),
-                                  )
-                                ],
-                                border: Border.all(
+          body: SafeArea(
+            child: GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Material(
+                              color: Colors.transparent,
+                              elevation: 1,
+                              child: Container(
+                                width: double.infinity,
+                                height: 60,
+                                decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBackground,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 4,
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      offset: Offset(0, 2),
+                                    )
+                                  ],
+                                  border: Border.all(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                  ),
                                 ),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 10, 0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    AuthUserStreamWidget(
-                                      child: InkWell(
-                                        onTap: () async {
-                                          scaffoldKey.currentState!
-                                              .openDrawer();
-                                        },
-                                        child: Container(
-                                          width: 30,
-                                          height: 30,
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Image.network(
-                                            valueOrDefault<String>(
-                                              currentUserPhoto,
-                                              'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png',
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 10, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      AuthUserStreamWidget(
+                                        child: InkWell(
+                                          onTap: () async {
+                                            scaffoldKey.currentState!
+                                                .openDrawer();
+                                          },
+                                          child: Container(
+                                            width: 30,
+                                            height: 30,
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
                                             ),
-                                            fit: BoxFit.cover,
+                                            child: Image.network(
+                                              valueOrDefault<String>(
+                                                currentUserPhoto,
+                                                'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png',
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      borderWidth: 1,
-                                      buttonSize: 60,
-                                      icon: FaIcon(
-                                        FontAwesomeIcons.twitter,
-                                        color: Colors.blue,
-                                        size: 30,
+                                      FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        borderWidth: 1,
+                                        buttonSize: 60,
+                                        icon: FaIcon(
+                                          FontAwesomeIcons.twitter,
+                                          color: Colors.blue,
+                                          size: 30,
+                                        ),
+                                        onPressed: () {
+                                          print('IconButton pressed ...');
+                                        },
                                       ),
-                                      onPressed: () {
-                                        print('IconButton pressed ...');
-                                      },
-                                    ),
-                                    Icon(
-                                      Icons.auto_awesome,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      size: 26,
-                                    ),
-                                  ],
+                                      Icon(
+                                        Icons.auto_awesome,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        size: 26,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          StreamBuilder<List<RelationsRecord>>(
-                            stream: queryRelationsRecord(
-                              queryBuilder: (relationsRecord) =>
-                                  relationsRecord.where('user_object',
-                                      isEqualTo: currentUserReference),
-                              singleRecord: true,
-                            ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircularProgressIndicator(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                    ),
-                                  ),
-                                );
-                              }
-                              List<RelationsRecord>
-                                  listViewRelationsRecordList = snapshot.data!;
-                              // Return an empty Container when the document does not exist.
-                              if (snapshot.data!.isEmpty) {
-                                return Container();
-                              }
-                              final listViewRelationsRecord =
-                                  listViewRelationsRecordList.first;
-                              return Builder(
-                                builder: (context) {
-                                  final tweetResults = homePageTweetsRecordList
-                                      .map((e) => e)
-                                      .toList();
-                                  return ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: tweetResults.length,
-                                    itemBuilder: (context, tweetResultsIndex) {
-                                      final tweetResultsItem =
-                                          tweetResults[tweetResultsIndex];
-                                      return Card(
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
+                            StreamBuilder<List<RelationsRecord>>(
+                              stream: queryRelationsRecord(
+                                queryBuilder: (relationsRecord) =>
+                                    relationsRecord.where('user_object',
+                                        isEqualTo: currentUserReference),
+                                singleRecord: true,
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircularProgressIndicator(
                                         color: FlutterFlowTheme.of(context)
-                                            .cardBackGround,
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 4, 0, 4),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(8, 8, 0, 4),
-                                                child:
-                                                    StreamBuilder<UsersRecord>(
-                                                  stream:
-                                                      UsersRecord.getDocument(
-                                                          tweetResultsItem
-                                                              .tweetedBy!),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 50,
-                                                          height: 50,
-                                                          child:
-                                                              CircularProgressIndicator(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryColor,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
-                                                    final rowUsersRecord =
-                                                        snapshot.data!;
-                                                    return Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Container(
-                                                          width: 50,
-                                                          height: 50,
-                                                          clipBehavior:
-                                                              Clip.antiAlias,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            shape:
-                                                                BoxShape.circle,
-                                                          ),
-                                                          child: Image.network(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              rowUsersRecord
-                                                                  .photoUrl,
-                                                              'https://images.unsplash.com/photo-1654701473955-9aacc05202d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzNHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=60',
+                                            .primaryColor,
+                                      ),
+                                    ),
+                                  );
+                                }
+                                List<RelationsRecord>
+                                    listViewRelationsRecordList =
+                                    snapshot.data!;
+                                // Return an empty Container when the document does not exist.
+                                if (snapshot.data!.isEmpty) {
+                                  return Container();
+                                }
+                                final listViewRelationsRecord =
+                                    listViewRelationsRecordList.first;
+                                return Builder(
+                                  builder: (context) {
+                                    final tweetResults =
+                                        homePageTweetsRecordList
+                                            .map((e) => e)
+                                            .toList();
+                                    return ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: tweetResults.length,
+                                      itemBuilder:
+                                          (context, tweetResultsIndex) {
+                                        final tweetResultsItem =
+                                            tweetResults[tweetResultsIndex];
+                                        return Card(
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          color: FlutterFlowTheme.of(context)
+                                              .cardBackGround,
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 4, 0, 4),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(8, 8, 0, 4),
+                                                  child: StreamBuilder<
+                                                      UsersRecord>(
+                                                    stream:
+                                                        UsersRecord.getDocument(
+                                                            tweetResultsItem
+                                                                .tweetedBy!),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      // Customize what your widget looks like when it's loading.
+                                                      if (!snapshot.hasData) {
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            width: 50,
+                                                            height: 50,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryColor,
                                                             ),
-                                                            fit: BoxFit.cover,
                                                           ),
+                                                        );
+                                                      }
+                                                      final rowUsersRecord =
+                                                          snapshot.data!;
+                                                      return Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Container(
+                                                            width: 50,
+                                                            height: 50,
+                                                            clipBehavior:
+                                                                Clip.antiAlias,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                            ),
+                                                            child:
+                                                                Image.network(
+                                                              valueOrDefault<
+                                                                  String>(
+                                                                rowUsersRecord
+                                                                    .photoUrl,
+                                                                'https://images.unsplash.com/photo-1654701473955-9aacc05202d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzNHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=60',
+                                                              ),
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          12,
+                                                                          4,
+                                                                          0,
+                                                                          4),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.min,
+                                                                        children: [
+                                                                          Text(
+                                                                            rowUsersRecord.displayName!,
+                                                                            style:
+                                                                                FlutterFlowTheme.of(context).subtitle1,
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                8,
+                                                                                8,
+                                                                                0,
+                                                                                8),
+                                                                            child:
+                                                                                Icon(
+                                                                              Icons.verified,
+                                                                              color: Colors.blue,
+                                                                              size: 24,
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.min,
+                                                                        children: [
+                                                                          InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              if (currentUserReference != rowUsersRecord.reference) {
+                                                                                await showModalBottomSheet(
+                                                                                  isScrollControlled: true,
+                                                                                  backgroundColor: Colors.transparent,
+                                                                                  context: context,
+                                                                                  builder: (context) {
+                                                                                    return Padding(
+                                                                                      padding: MediaQuery.of(context).viewInsets,
+                                                                                      child: MoreOptionTemplateWidget(
+                                                                                        display: rowUsersRecord.displayName,
+                                                                                        isFollow: listViewRelationsRecord.followedIds!.toList().contains(currentUserReference),
+                                                                                      ),
+                                                                                    );
+                                                                                  },
+                                                                                );
+                                                                              } else {
+                                                                                await showModalBottomSheet(
+                                                                                  isScrollControlled: true,
+                                                                                  backgroundColor: Colors.transparent,
+                                                                                  context: context,
+                                                                                  builder: (context) {
+                                                                                    return Padding(
+                                                                                      padding: MediaQuery.of(context).viewInsets,
+                                                                                      child: MoreOptionTempAuthUserWidget(),
+                                                                                    );
+                                                                                  },
+                                                                                );
+                                                                              }
+                                                                            },
+                                                                            child:
+                                                                                Icon(
+                                                                              Icons.more_vert,
+                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              size: 24,
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  Wrap(
+                                                                    spacing: 0,
+                                                                    runSpacing:
+                                                                        0,
+                                                                    alignment:
+                                                                        WrapAlignment
+                                                                            .start,
+                                                                    crossAxisAlignment:
+                                                                        WrapCrossAlignment
+                                                                            .start,
+                                                                    direction: Axis
+                                                                        .horizontal,
+                                                                    runAlignment:
+                                                                        WrapAlignment
+                                                                            .start,
+                                                                    verticalDirection:
+                                                                        VerticalDirection
+                                                                            .down,
+                                                                    clipBehavior:
+                                                                        Clip.none,
+                                                                    children: [
+                                                                      Text(
+                                                                        functions
+                                                                            .getUserHandleFromEmail(rowUsersRecord.email!),
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyText2,
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            4,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                        child:
+                                                                            Text(
+                                                                          '•',
+                                                                          style:
+                                                                              FlutterFlowTheme.of(context).bodyText2,
+                                                                        ),
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            4,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                        child:
+                                                                            Text(
+                                                                          dateTimeFormat(
+                                                                              'relative',
+                                                                              tweetResultsItem.updatedBy!),
+                                                                          style:
+                                                                              FlutterFlowTheme.of(context).bodyText2,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(8, 0, 8, 8),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(0, 4,
+                                                                    4, 12),
+                                                        child: Text(
+                                                          tweetResultsItem
+                                                              .content!,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
                                                         ),
-                                                        Expanded(
-                                                          child: Padding(
+                                                      ),
+                                                      Wrap(
+                                                        spacing: 0,
+                                                        runSpacing: 0,
+                                                        alignment:
+                                                            WrapAlignment.start,
+                                                        crossAxisAlignment:
+                                                            WrapCrossAlignment
+                                                                .start,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        runAlignment:
+                                                            WrapAlignment.start,
+                                                        verticalDirection:
+                                                            VerticalDirection
+                                                                .down,
+                                                        clipBehavior: Clip.none,
+                                                        children: [
+                                                          Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        12,
-                                                                        4,
                                                                         0,
-                                                                        4),
-                                                            child: Column(
+                                                                        0,
+                                                                        12,
+                                                                        0),
+                                                            child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
                                                                       .min,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
                                                               children: [
-                                                                Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    Row(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .min,
-                                                                      children: [
-                                                                        Text(
-                                                                          rowUsersRecord
-                                                                              .displayName!,
-                                                                          style:
-                                                                              FlutterFlowTheme.of(context).subtitle1,
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              8,
-                                                                              8,
-                                                                              0,
-                                                                              8),
-                                                                          child:
-                                                                              Icon(
-                                                                            Icons.verified,
-                                                                            color:
-                                                                                Colors.blue,
-                                                                            size:
-                                                                                24,
-                                                                          ),
-                                                                        ),
-                                                                      ],
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          8,
+                                                                          8,
+                                                                          0,
+                                                                          8),
+                                                                  child:
+                                                                      InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      final tweetsUpdateData =
+                                                                          {
+                                                                        're_tweeted_by':
+                                                                            FieldValue.arrayUnion([
+                                                                          currentUserReference
+                                                                        ]),
+                                                                      };
+                                                                      await tweetResultsItem
+                                                                          .reference
+                                                                          .update(
+                                                                              tweetsUpdateData);
+                                                                    },
+                                                                    child:
+                                                                        FaIcon(
+                                                                      FontAwesomeIcons
+                                                                          .retweet,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryText,
+                                                                      size: 20,
                                                                     ),
-                                                                    Row(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .min,
-                                                                      children: [
-                                                                        InkWell(
-                                                                          onTap:
-                                                                              () async {
-                                                                            if (currentUserReference !=
-                                                                                rowUsersRecord.reference) {
-                                                                              await showModalBottomSheet(
-                                                                                isScrollControlled: true,
-                                                                                backgroundColor: Colors.transparent,
-                                                                                context: context,
-                                                                                builder: (context) {
-                                                                                  return Padding(
-                                                                                    padding: MediaQuery.of(context).viewInsets,
-                                                                                    child: MoreOptionTemplateWidget(
-                                                                                      display: rowUsersRecord.displayName,
-                                                                                      isFollow: listViewRelationsRecord.followedIds!.toList().contains(currentUserReference),
-                                                                                    ),
-                                                                                  );
-                                                                                },
-                                                                              );
-                                                                            } else {
-                                                                              await showModalBottomSheet(
-                                                                                isScrollControlled: true,
-                                                                                backgroundColor: Colors.transparent,
-                                                                                context: context,
-                                                                                builder: (context) {
-                                                                                  return Padding(
-                                                                                    padding: MediaQuery.of(context).viewInsets,
-                                                                                    child: MoreOptionTempAuthUserWidget(),
-                                                                                  );
-                                                                                },
-                                                                              );
-                                                                            }
-                                                                          },
-                                                                          child:
-                                                                              Icon(
-                                                                            Icons.more_vert,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).secondaryBackground,
-                                                                            size:
-                                                                                24,
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
+                                                                  ),
                                                                 ),
-                                                                Wrap(
-                                                                  spacing: 0,
-                                                                  runSpacing: 0,
-                                                                  alignment:
-                                                                      WrapAlignment
-                                                                          .start,
-                                                                  crossAxisAlignment:
-                                                                      WrapCrossAlignment
-                                                                          .start,
-                                                                  direction: Axis
-                                                                      .horizontal,
-                                                                  runAlignment:
-                                                                      WrapAlignment
-                                                                          .start,
-                                                                  verticalDirection:
-                                                                      VerticalDirection
-                                                                          .down,
-                                                                  clipBehavior:
-                                                                      Clip.none,
-                                                                  children: [
-                                                                    Text(
-                                                                      functions.getUserHandleFromEmail(
-                                                                          rowUsersRecord
-                                                                              .email!),
+                                                                if (tweetResultsItem
+                                                                    .reTweetedBy!
+                                                                    .toList()
+                                                                    .contains(
+                                                                        currentUserReference))
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            8,
+                                                                            0,
+                                                                            8,
+                                                                            0),
+                                                                    child: Text(
+                                                                      tweetResultsItem
+                                                                          .reTweetedBy!
+                                                                          .toList()
+                                                                          .length
+                                                                          .toString(),
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .bodyText2,
+                                                                          .bodyText2
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Poppins',
+                                                                            fontSize:
+                                                                                12,
+                                                                          ),
                                                                     ),
-                                                                    Padding(
-                                                                      padding: EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                              4,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                      child:
-                                                                          Text(
-                                                                        '•',
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyText2,
-                                                                      ),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                              4,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                      child:
-                                                                          Text(
-                                                                        dateTimeFormat(
-                                                                            'relative',
-                                                                            tweetResultsItem.updatedBy!),
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyText2,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
+                                                                  ),
                                                               ],
                                                             ),
                                                           ),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(8, 0, 8, 8),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 4, 4, 12),
-                                                      child: Text(
-                                                        tweetResultsItem
-                                                            .content!,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                    Wrap(
-                                                      spacing: 0,
-                                                      runSpacing: 0,
-                                                      alignment:
-                                                          WrapAlignment.start,
-                                                      crossAxisAlignment:
-                                                          WrapCrossAlignment
-                                                              .start,
-                                                      direction:
-                                                          Axis.horizontal,
-                                                      runAlignment:
-                                                          WrapAlignment.start,
-                                                      verticalDirection:
-                                                          VerticalDirection
-                                                              .down,
-                                                      clipBehavior: Clip.none,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      0, 12, 0),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0,
+                                                                        0,
+                                                                        12,
+                                                                        0),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              children: [
+                                                                if (!tweetResultsItem
+                                                                    .likedBy!
+                                                                    .toList()
+                                                                    .contains(
+                                                                        currentUserReference))
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             8,
                                                                             8,
                                                                             0,
                                                                             8),
-                                                                child: InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    final tweetsUpdateData =
-                                                                        {
-                                                                      're_tweeted_by':
-                                                                          FieldValue
-                                                                              .arrayUnion([
-                                                                        currentUserReference
-                                                                      ]),
-                                                                    };
-                                                                    await tweetResultsItem
-                                                                        .reference
-                                                                        .update(
-                                                                            tweetsUpdateData);
-                                                                  },
-                                                                  child: FaIcon(
-                                                                    FontAwesomeIcons
-                                                                        .retweet,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .secondaryText,
-                                                                    size: 20,
+                                                                    child:
+                                                                        InkWell(
+                                                                      onTap:
+                                                                          () async {
+                                                                        final tweetsUpdateData =
+                                                                            {
+                                                                          'liked_by':
+                                                                              FieldValue.arrayUnion([
+                                                                            currentUserReference
+                                                                          ]),
+                                                                        };
+                                                                        await tweetResultsItem
+                                                                            .reference
+                                                                            .update(tweetsUpdateData);
+                                                                      },
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .favorite_border_rounded,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
+                                                                        size:
+                                                                            20,
+                                                                      ),
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                              ),
-                                                              if (tweetResultsItem
-                                                                  .reTweetedBy!
-                                                                  .toList()
-                                                                  .contains(
-                                                                      currentUserReference))
+                                                                if (tweetResultsItem
+                                                                    .likedBy!
+                                                                    .toList()
+                                                                    .contains(
+                                                                        currentUserReference))
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            8,
+                                                                            8,
+                                                                            0,
+                                                                            8),
+                                                                    child:
+                                                                        InkWell(
+                                                                      onTap:
+                                                                          () async {
+                                                                        final tweetsUpdateData =
+                                                                            {
+                                                                          'liked_by':
+                                                                              FieldValue.arrayRemove([
+                                                                            currentUserReference
+                                                                          ]),
+                                                                        };
+                                                                        await tweetResultsItem
+                                                                            .reference
+                                                                            .update(tweetsUpdateData);
+                                                                      },
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .favorite_sharp,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
+                                                                        size:
+                                                                            20,
+                                                                      ),
+                                                                    ),
+                                                                  ),
                                                                 Padding(
                                                                   padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          8,
+                                                                          4,
                                                                           0,
                                                                           8,
                                                                           0),
                                                                   child: Text(
                                                                     tweetResultsItem
-                                                                        .reTweetedBy!
+                                                                        .likedBy!
                                                                         .toList()
                                                                         .length
                                                                         .toString(),
@@ -1148,205 +1262,94 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                           fontSize:
                                                                               12,
                                                                         ),
-                                                                  ),
+                                                                  ).animated([
+                                                                    animationsMap[
+                                                                        'textOnActionTriggerAnimation']!
+                                                                  ]),
                                                                 ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      0, 12, 0),
-                                                          child: Row(
+                                                          Row(
                                                             mainAxisSize:
                                                                 MainAxisSize
                                                                     .min,
                                                             children: [
-                                                              if (!tweetResultsItem
-                                                                  .likedBy!
-                                                                  .toList()
-                                                                  .contains(
-                                                                      currentUserReference))
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          8,
-                                                                          8,
-                                                                          0,
-                                                                          8),
-                                                                  child:
-                                                                      InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      final tweetsUpdateData =
-                                                                          {
-                                                                        'liked_by':
-                                                                            FieldValue.arrayUnion([
-                                                                          currentUserReference
-                                                                        ]),
-                                                                      };
-                                                                      await tweetResultsItem
-                                                                          .reference
-                                                                          .update(
-                                                                              tweetsUpdateData);
-                                                                    },
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .favorite_border_rounded,
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .secondaryText,
-                                                                      size: 20,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              if (tweetResultsItem
-                                                                  .likedBy!
-                                                                  .toList()
-                                                                  .contains(
-                                                                      currentUserReference))
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          8,
-                                                                          8,
-                                                                          0,
-                                                                          8),
-                                                                  child:
-                                                                      InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      final tweetsUpdateData =
-                                                                          {
-                                                                        'liked_by':
-                                                                            FieldValue.arrayRemove([
-                                                                          currentUserReference
-                                                                        ]),
-                                                                      };
-                                                                      await tweetResultsItem
-                                                                          .reference
-                                                                          .update(
-                                                                              tweetsUpdateData);
-                                                                    },
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .favorite_sharp,
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .secondaryText,
-                                                                      size: 20,
-                                                                    ),
-                                                                  ),
-                                                                ),
                                                               Padding(
                                                                 padding:
                                                                     EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            4,
-                                                                            0,
                                                                             8,
-                                                                            0),
-                                                                child: Text(
-                                                                  tweetResultsItem
-                                                                      .likedBy!
-                                                                      .toList()
-                                                                      .length
-                                                                      .toString(),
-                                                                  style: FlutterFlowTheme.of(
+                                                                            8,
+                                                                            8,
+                                                                            8),
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .ios_share,
+                                                                  color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Poppins',
-                                                                        fontSize:
-                                                                            12,
-                                                                      ),
-                                                                ).animated([
-                                                                  animationsMap[
-                                                                      'textOnActionTriggerAnimation']!
-                                                                ]),
+                                                                      .secondaryText,
+                                                                  size: 24,
+                                                                ),
                                                               ),
                                                             ],
                                                           ),
-                                                        ),
-                                                        Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          8,
-                                                                          8,
-                                                                          8,
-                                                                          8),
-                                                              child: Icon(
-                                                                Icons.ios_share,
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                                size: 24,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryColor,
-                    ),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        await signOut();
-                        await Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OnBoaringPageWidget(),
-                          ),
-                          (r) => false,
-                        );
-                      },
-                      text: 'Logout',
-                      options: FFButtonOptions(
-                        width: 130,
-                        height: 40,
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.blue,
-                                ),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
+                                        );
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
                         ),
-                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                  ),
-                ],
+                    Container(
+                      width: double.infinity,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryColor,
+                      ),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          await signOut();
+                          await Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OnBoaringPageWidget(),
+                            ),
+                            (r) => false,
+                          );
+                        },
+                        text: 'Logout',
+                        options: FFButtonOptions(
+                          width: 130,
+                          height: 40,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          textStyle:
+                              FlutterFlowTheme.of(context).subtitle2.override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.blue,
+                                  ),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

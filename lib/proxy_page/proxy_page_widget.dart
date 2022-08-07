@@ -1,6 +1,8 @@
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../profile/profile_widget.dart';
+import '../setting/setting_widget.dart';
+import '../custom_code/actions/index.dart' as actions;
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,7 +14,9 @@ class ProxyPageWidget extends StatefulWidget {
 }
 
 class _ProxyPageWidgetState extends State<ProxyPageWidget> {
+  String? host;
   bool? switchListTileValue;
+  String? port;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -53,7 +57,7 @@ class _ProxyPageWidgetState extends State<ProxyPageWidget> {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ProfileWidget(),
+                                    builder: (context) => SettingWidget(),
                                   ),
                                 );
                               },
@@ -116,29 +120,20 @@ class _ProxyPageWidgetState extends State<ProxyPageWidget> {
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20, 20, 0, 0),
-                child: InkWell(
-                  onTap: () async {
-                    await showDialog(
-                      context: context,
-                      builder: (alertDialogContext) {
-                        return AlertDialog(
-                          title: Text('Proxy'),
-                          content: Text('Alert Message'),
-                          actions: [
-                            TextButton(
-                              onPressed: () =>
-                                  Navigator.pop(alertDialogContext),
-                              child: Text('Ok'),
-                            ),
-                          ],
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    InkWell(
+                      onTap: () async {
+                        host = await actions.showTextDialogBoxCopy(
+                          context,
+                          FFAppState().localHost,
                         );
+                        setState(() => FFAppState().localHost = host!);
+
+                        setState(() {});
                       },
-                    );
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Column(
+                      child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -160,22 +155,38 @@ class _ProxyPageWidgetState extends State<ProxyPageWidget> {
                           Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
+                              if (functions.isStringEmpty(host))
+                                Text(
+                                  'Configure your proxy\'s hostname.',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
+                              if (!functions.isStringEmpty(host))
+                                Text(
+                                  host!,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
                               Text(
-                                'Configure your proxy\'s hostname.',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                                FFAppState().localHost,
+                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               Padding(
@@ -183,41 +194,68 @@ class _ProxyPageWidgetState extends State<ProxyPageWidget> {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Proxy Port',
-                              style: FlutterFlowTheme.of(context)
-                                  .subtitle1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Configure your proxy\'s port number.',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ],
+                    InkWell(
+                      onTap: () async {
+                        port = await actions.showTextDialogBoxCopy(
+                          context,
+                          FFAppState().localPort,
+                        );
+                        setState(() => FFAppState().localPort = port!);
+
+                        setState(() {});
+                      },
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'Proxy Port',
+                                style: FlutterFlowTheme.of(context)
+                                    .subtitle1
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              if (functions.isStringEmpty(port))
+                                Text(
+                                  'Configure your proxy\'s port number.',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
+                              if (!functions.isStringEmpty(port))
+                                Text(
+                                  port!,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
+                              Text(
+                                FFAppState().localPort,
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
