@@ -122,8 +122,11 @@ class _ProxyPageWidgetState extends State<ProxyPageWidget> {
                       context: context,
                       builder: (alertDialogContext) {
                         return AlertDialog(
-                          title: Text('Proxy'),
-                          content: Text('Alert Message'),
+                          title: Text('Proxy Host'),
+                          content: TextField(
+                            autofocus: true,
+                            decoration: InputDecoration(hintText: "Enter a host"),
+                          ),
                           actions: [
                             TextButton(
                               onPressed: () =>
