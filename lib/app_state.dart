@@ -42,6 +42,8 @@ class FFAppState {
   String wallPicture = '';
 
   bool localTip = false;
+
+  DateTime? localDate;
 }
 
 LatLng? _latLngFromString(String? val) {

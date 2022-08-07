@@ -25,8 +25,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   @BuiltValueField(wireName: 'phone_number')
   String? get phoneNumber;
 
-  String? get dob;
-
   bool? get isTNCChecked;
 
   @BuiltValueField(wireName: 'number_of_followers')
@@ -42,6 +40,10 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   @BuiltValueField(wireName: 'website_link')
   String? get websiteLink;
 
+  String? get location;
+
+  DateTime? get dobTimeStamp;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -52,13 +54,13 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..photoUrl = ''
     ..uid = ''
     ..phoneNumber = ''
-    ..dob = ''
     ..isTNCChecked = false
     ..numberOfFollowers = 0
     ..wallPicture = ''
     ..tips = false
     ..bio = ''
-    ..websiteLink = '';
+    ..websiteLink = ''
+    ..location = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -88,13 +90,14 @@ Map<String, dynamic> createUsersRecordData({
   String? uid,
   DateTime? createdTime,
   String? phoneNumber,
-  String? dob,
   bool? isTNCChecked,
   int? numberOfFollowers,
   String? wallPicture,
   bool? tips,
   String? bio,
   String? websiteLink,
+  String? location,
+  DateTime? dobTimeStamp,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -106,13 +109,14 @@ Map<String, dynamic> createUsersRecordData({
         ..uid = uid
         ..createdTime = createdTime
         ..phoneNumber = phoneNumber
-        ..dob = dob
         ..isTNCChecked = isTNCChecked
         ..numberOfFollowers = numberOfFollowers
         ..wallPicture = wallPicture
         ..tips = tips
         ..bio = bio
-        ..websiteLink = websiteLink,
+        ..websiteLink = websiteLink
+        ..location = location
+        ..dobTimeStamp = dobTimeStamp,
     ),
   );
 

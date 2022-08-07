@@ -1,15 +1,19 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
+import '../flutter_flow/flutter_flow_drop_down.dart';
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
+import '../profile/profile_widget.dart';
 import '../tips/tips_widget.dart';
-import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UploadPictureWidget extends StatefulWidget {
@@ -20,24 +24,25 @@ class UploadPictureWidget extends StatefulWidget {
 }
 
 class _UploadPictureWidgetState extends State<UploadPictureWidget> {
-  String uploadedFileUrl1 = '';
-  String uploadedFileUrl2 = '';
+  DateTime? datePicked;
+  String? dropDownValue;
   TextEditingController? bioTextFieldController;
   TextEditingController? nameTextFieldController;
   TextEditingController? websiteTextFieldController;
-  TextEditingController? birthDateTextFieldController;
+  String uploadedFileUrl1 = '';
+  String uploadedFileUrl2 = '';
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    bioTextFieldController = TextEditingController();
+    bioTextFieldController = TextEditingController(
+        text: valueOrDefault(currentUserDocument?.bio, ''));
     nameTextFieldController =
         TextEditingController(text: currentUserDisplayName);
     websiteTextFieldController = TextEditingController(
         text: valueOrDefault(currentUserDocument?.websiteLink, ''));
-    birthDateTextFieldController = TextEditingController();
   }
 
   @override
@@ -79,8 +84,7 @@ class _UploadPictureWidgetState extends State<UploadPictureWidget> {
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          UploadPictureWidget(),
+                                      builder: (context) => ProfileWidget(),
                                     ),
                                   );
                                 },
@@ -108,8 +112,28 @@ class _UploadPictureWidgetState extends State<UploadPictureWidget> {
                             ],
                           ),
                           FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
+                            onPressed: () async {
+                              final usersUpdateData = createUsersRecordData(
+                                displayName: nameTextFieldController!.text,
+                                bio: bioTextFieldController!.text,
+                                location: dropDownValue,
+                                websiteLink: websiteTextFieldController!.text,
+                                dobTimeStamp: datePicked,
+                              );
+                              await currentUserReference!
+                                  .update(usersUpdateData);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Profile Updated Successfully.',
+                                    style:
+                                        FlutterFlowTheme.of(context).subtitle2,
+                                  ),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).lineColor,
+                                ),
+                              );
                             },
                             text: 'Save',
                             options: FFButtonOptions(
@@ -424,86 +448,119 @@ class _UploadPictureWidgetState extends State<UploadPictureWidget> {
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 5, 0, 0),
-                                    child: TextFormField(
-                                      controller: bioTextFieldController,
-                                      autofocus: true,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        labelText: 'Bio',
-                                        hintText: 'Descripe yourself',
-                                        hintStyle: FlutterFlowTheme.of(context)
-                                            .bodyText2
+                                    child: AuthUserStreamWidget(
+                                      child: TextFormField(
+                                        controller: bioTextFieldController,
+                                        autofocus: true,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          labelText: 'Bio',
+                                          hintText: 'Descripe yourself',
+                                          hintStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .bodyText2
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
                                             .override(
                                               fontFamily: 'Poppins',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
+                                              fontSize: 16,
                                               fontWeight: FontWeight.normal,
                                             ),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1,
-                                          ),
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(4.0),
-                                            topRight: Radius.circular(4.0),
-                                          ),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1,
-                                          ),
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(4.0),
-                                            topRight: Radius.circular(4.0),
-                                          ),
-                                        ),
+                                        maxLines: 4,
                                       ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                      maxLines: 4,
                                     ),
                                   ),
-                                  StreamBuilder<List<LocationsRecord>>(
-                                    stream: queryLocationsRecord(),
-                                    builder: (context, snapshot) {
-                                      // Customize what your widget looks like when it's loading.
-                                      if (!snapshot.hasData) {
-                                        return Center(
-                                          child: SizedBox(
-                                            width: 50,
-                                            height: 50,
-                                            child: CircularProgressIndicator(
-                                              color:
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      AuthUserStreamWidget(
+                                        child: StreamBuilder<
+                                            List<LocationsRecord>>(
+                                          stream: queryLocationsRecord(),
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                child: SizedBox(
+                                                  width: 50,
+                                                  height: 50,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryColor,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            List<LocationsRecord>
+                                                dropDownLocationsRecordList =
+                                                snapshot.data!;
+                                            return FlutterFlowDropDown(
+                                              initialOption: dropDownValue ??=
+                                                  valueOrDefault(
+                                                      currentUserDocument
+                                                          ?.location,
+                                                      ''),
+                                              options:
+                                                  dropDownLocationsRecordList
+                                                      .map((e) => e.name!)
+                                                      .toList()
+                                                      .toList(),
+                                              onChanged: (val) => setState(
+                                                  () => dropDownValue = val),
+                                              width: 180,
+                                              height: 50,
+                                              textStyle:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                      List<LocationsRecord>
-                                          typeAheadWidgetLocationsRecordList =
-                                          snapshot.data!;
-                                      return Container(
-                                        width: double.infinity,
-                                        height: 70,
-                                        child: custom_widgets.TypeAheadWidget(
-                                          width: double.infinity,
-                                          height: 70,
-                                          cities:
-                                              typeAheadWidgetLocationsRecordList
-                                                  .map((e) => e.name!)
-                                                  .toList(),
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        color: Colors.black,
+                                                      ),
+                                              hintText: 'Please select...',
+                                              fillColor: Colors.white,
+                                              elevation: 2,
+                                              borderColor: Colors.transparent,
+                                              borderWidth: 0,
+                                              borderRadius: 0,
+                                              margin: EdgeInsetsDirectional
+                                                  .fromSTEB(12, 4, 12, 4),
+                                            );
+                                          },
                                         ),
-                                      );
-                                    },
+                                      ),
+                                    ],
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -560,54 +617,53 @@ class _UploadPictureWidgetState extends State<UploadPictureWidget> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 5, 0, 0),
-                                    child: TextFormField(
-                                      controller: birthDateTextFieldController,
-                                      autofocus: true,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        labelText: 'Birth Date',
-                                        hintText: 'Add your Date of Birth',
-                                        hintStyle: FlutterFlowTheme.of(context)
-                                            .bodyText2
-                                            .override(
-                                              fontFamily: 'Poppins',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1,
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          valueOrDefault<String>(
+                                            dateTimeFormat('yMMMd',
+                                                FFAppState().localDate),
+                                            'Select Date',
                                           ),
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(4.0),
-                                            topRight: Radius.circular(4.0),
-                                          ),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1,
-                                          ),
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(4.0),
-                                            topRight: Radius.circular(4.0),
-                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                lineHeight: 4,
+                                              ),
                                         ),
                                       ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                    ),
+                                      FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        borderWidth: 1,
+                                        buttonSize: 60,
+                                        icon: FaIcon(
+                                          FontAwesomeIcons.solidCalendarAlt,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 30,
+                                        ),
+                                        onPressed: () async {
+                                          await DatePicker.showDatePicker(
+                                            context,
+                                            showTitleActions: true,
+                                            onConfirm: (date) {
+                                              setState(() => datePicked = date);
+                                            },
+                                            currentTime: getCurrentTimestamp,
+                                            minTime: DateTime(0, 0, 0),
+                                          );
+
+                                          setState(() => FFAppState()
+                                              .localDate = datePicked);
+                                        },
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),

@@ -7,6 +7,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../home_page/home_page_widget.dart';
 import '../t_n_c_page/t_n_c_page_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,6 +19,7 @@ class SignUpCreatePageWidget extends StatefulWidget {
     this.dob,
     this.isTNC,
     this.password,
+    this.dobTimeStamp,
   }) : super(key: key);
 
   final String? userName;
@@ -25,13 +27,14 @@ class SignUpCreatePageWidget extends StatefulWidget {
   final String? dob;
   final bool? isTNC;
   final String? password;
+  final DateTime? dobTimeStamp;
 
   @override
   _SignUpCreatePageWidgetState createState() => _SignUpCreatePageWidgetState();
 }
 
 class _SignUpCreatePageWidgetState extends State<SignUpCreatePageWidget> {
-  TextEditingController? dOBFieldController;
+  DateTime? datePicked;
   TextEditingController? emailFieldController;
   TextEditingController? nameFieldController;
   TextEditingController? passwordFieldController;
@@ -42,7 +45,6 @@ class _SignUpCreatePageWidgetState extends State<SignUpCreatePageWidget> {
   @override
   void initState() {
     super.initState();
-    dOBFieldController = TextEditingController(text: widget.dob);
     emailFieldController = TextEditingController(text: widget.emailId);
     nameFieldController = TextEditingController(text: widget.userName);
     passwordFieldController = TextEditingController(text: widget.password);
@@ -246,34 +248,62 @@ class _SignUpCreatePageWidgetState extends State<SignUpCreatePageWidget> {
                           style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                       ),
-                      TextFormField(
-                        controller: dOBFieldController,
-                        autofocus: true,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFF666666),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFF666666),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
+                      Container(
+                        width: double.infinity,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).cardBackGround,
+                          border: Border.all(
+                            color: Color(0xFF666666),
                           ),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                valueOrDefault<String>(
+                                  dateTimeFormat(
+                                      'yMMMd', FFAppState().localDate),
+                                  'Select Date',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      lineHeight: 4,
+                                    ),
+                              ),
+                            ),
+                            FlutterFlowIconButton(
+                              borderColor: Colors.transparent,
+                              borderRadius: 30,
+                              borderWidth: 1,
+                              buttonSize: 60,
+                              icon: FaIcon(
+                                FontAwesomeIcons.solidCalendarAlt,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryColor,
+                                size: 30,
+                              ),
+                              onPressed: () async {
+                                await DatePicker.showDatePicker(
+                                  context,
+                                  showTitleActions: true,
+                                  onConfirm: (date) {
+                                    setState(() => datePicked = date);
+                                  },
+                                  currentTime: getCurrentTimestamp,
+                                  minTime: DateTime(0, 0, 0),
+                                );
+
+                                setState(
+                                    () => FFAppState().localDate = datePicked);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -315,7 +345,7 @@ class _SignUpCreatePageWidgetState extends State<SignUpCreatePageWidget> {
                       final usersCreateData = createUsersRecordData(
                         isTNCChecked: widget.isTNC,
                         displayName: widget.userName,
-                        dob: widget.dob,
+                        dobTimeStamp: widget.dobTimeStamp,
                       );
                       await UsersRecord.collection
                           .doc(user.uid)

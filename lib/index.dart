@@ -14,3 +14,7 @@ export 'algoliad_page/algoliad_page_widget.dart' show AlgoliadPageWidget;
 export 'profile/profile_widget.dart' show ProfileWidget;
 export 'tips/tips_widget.dart' show TipsWidget;
 export 'upload_picture/upload_picture_widget.dart' show UploadPictureWidget;
+export 'twitterfor_professionals/twitterfor_professionals_widget.dart'
+    show TwitterforProfessionalsWidget;
+export 'setting/setting_widget.dart' show SettingWidget;
+export 'proxy_page/proxy_page_widget.dart' show ProxyPageWidget;

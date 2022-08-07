@@ -15,12 +15,14 @@ class TNCPageWidget extends StatefulWidget {
     this.emailAddress,
     this.dob,
     this.password,
+    this.dobTimeStamp,
   }) : super(key: key);
 
   final String? userName;
   final String? emailAddress;
   final String? dob;
   final String? password;
+  final DateTime? dobTimeStamp;
 
   @override
   _TNCPageWidgetState createState() => _TNCPageWidgetState();
@@ -194,6 +196,7 @@ class _TNCPageWidgetState extends State<TNCPageWidget> {
                                 dob: widget.dob,
                                 isTNC: checkboxListTileValue,
                                 password: widget.password,
+                                dobTimeStamp: widget.dobTimeStamp,
                               ),
                             ),
                           );

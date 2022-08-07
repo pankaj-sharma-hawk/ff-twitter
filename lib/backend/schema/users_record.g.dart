@@ -61,13 +61,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.dob;
-    if (value != null) {
-      result
-        ..add('dob')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.isTNCChecked;
     if (value != null) {
       result
@@ -116,6 +109,13 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.dobTimeStamp;
+    if (value != null) {
+      result
+        ..add('dobTimeStamp')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -162,10 +162,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.phoneNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'dob':
-          result.dob = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
         case 'isTNCChecked':
           result.isTNCChecked = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
@@ -194,6 +190,10 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.location = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'dobTimeStamp':
+          result.dobTimeStamp = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -221,8 +221,6 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? phoneNumber;
   @override
-  final String? dob;
-  @override
   final bool? isTNCChecked;
   @override
   final int? numberOfFollowers;
@@ -237,6 +235,8 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? location;
   @override
+  final DateTime? dobTimeStamp;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -249,7 +249,6 @@ class _$UsersRecord extends UsersRecord {
       this.uid,
       this.createdTime,
       this.phoneNumber,
-      this.dob,
       this.isTNCChecked,
       this.numberOfFollowers,
       this.wallPicture,
@@ -257,6 +256,7 @@ class _$UsersRecord extends UsersRecord {
       this.bio,
       this.websiteLink,
       this.location,
+      this.dobTimeStamp,
       this.ffRef})
       : super._();
 
@@ -277,7 +277,6 @@ class _$UsersRecord extends UsersRecord {
         uid == other.uid &&
         createdTime == other.createdTime &&
         phoneNumber == other.phoneNumber &&
-        dob == other.dob &&
         isTNCChecked == other.isTNCChecked &&
         numberOfFollowers == other.numberOfFollowers &&
         wallPicture == other.wallPicture &&
@@ -285,6 +284,7 @@ class _$UsersRecord extends UsersRecord {
         bio == other.bio &&
         websiteLink == other.websiteLink &&
         location == other.location &&
+        dobTimeStamp == other.dobTimeStamp &&
         ffRef == other.ffRef;
   }
 
@@ -312,14 +312,14 @@ class _$UsersRecord extends UsersRecord {
                                                     uid.hashCode),
                                                 createdTime.hashCode),
                                             phoneNumber.hashCode),
-                                        dob.hashCode),
-                                    isTNCChecked.hashCode),
-                                numberOfFollowers.hashCode),
-                            wallPicture.hashCode),
-                        tips.hashCode),
-                    bio.hashCode),
-                websiteLink.hashCode),
-            location.hashCode),
+                                        isTNCChecked.hashCode),
+                                    numberOfFollowers.hashCode),
+                                wallPicture.hashCode),
+                            tips.hashCode),
+                        bio.hashCode),
+                    websiteLink.hashCode),
+                location.hashCode),
+            dobTimeStamp.hashCode),
         ffRef.hashCode));
   }
 
@@ -332,7 +332,6 @@ class _$UsersRecord extends UsersRecord {
           ..add('uid', uid)
           ..add('createdTime', createdTime)
           ..add('phoneNumber', phoneNumber)
-          ..add('dob', dob)
           ..add('isTNCChecked', isTNCChecked)
           ..add('numberOfFollowers', numberOfFollowers)
           ..add('wallPicture', wallPicture)
@@ -340,6 +339,7 @@ class _$UsersRecord extends UsersRecord {
           ..add('bio', bio)
           ..add('websiteLink', websiteLink)
           ..add('location', location)
+          ..add('dobTimeStamp', dobTimeStamp)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -372,10 +372,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get phoneNumber => _$this._phoneNumber;
   set phoneNumber(String? phoneNumber) => _$this._phoneNumber = phoneNumber;
 
-  String? _dob;
-  String? get dob => _$this._dob;
-  set dob(String? dob) => _$this._dob = dob;
-
   bool? _isTNCChecked;
   bool? get isTNCChecked => _$this._isTNCChecked;
   set isTNCChecked(bool? isTNCChecked) => _$this._isTNCChecked = isTNCChecked;
@@ -405,6 +401,11 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get location => _$this._location;
   set location(String? location) => _$this._location = location;
 
+  DateTime? _dobTimeStamp;
+  DateTime? get dobTimeStamp => _$this._dobTimeStamp;
+  set dobTimeStamp(DateTime? dobTimeStamp) =>
+      _$this._dobTimeStamp = dobTimeStamp;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -422,7 +423,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _uid = $v.uid;
       _createdTime = $v.createdTime;
       _phoneNumber = $v.phoneNumber;
-      _dob = $v.dob;
       _isTNCChecked = $v.isTNCChecked;
       _numberOfFollowers = $v.numberOfFollowers;
       _wallPicture = $v.wallPicture;
@@ -430,6 +430,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _bio = $v.bio;
       _websiteLink = $v.websiteLink;
       _location = $v.location;
+      _dobTimeStamp = $v.dobTimeStamp;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -459,7 +460,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             uid: uid,
             createdTime: createdTime,
             phoneNumber: phoneNumber,
-            dob: dob,
             isTNCChecked: isTNCChecked,
             numberOfFollowers: numberOfFollowers,
             wallPicture: wallPicture,
@@ -467,6 +467,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             bio: bio,
             websiteLink: websiteLink,
             location: location,
+            dobTimeStamp: dobTimeStamp,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

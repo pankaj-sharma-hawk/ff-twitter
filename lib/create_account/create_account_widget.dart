@@ -449,6 +449,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                               emailAddress: emailAddressFieldController!.text,
                               dob: dateFieldController!.text,
                               password: passwordFieldController!.text,
+                              dobTimeStamp: datePicked,
                             ),
                           ),
                         );

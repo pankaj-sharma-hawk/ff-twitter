@@ -198,6 +198,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                       valueOrDefault(
                                           currentUserDocument?.wallPicture,
                                           ''));
+                                  setState(() => FFAppState().localDate =
+                                      currentUserDocument!.dobTimeStamp);
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
