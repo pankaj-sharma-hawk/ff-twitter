@@ -255,7 +255,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     ),
                     Container(
                       width: double.infinity,
-                      height: 300,
+                      height: 280,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).primaryBackground,
                       ),
@@ -459,7 +459,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     Divider(),
                     Container(
                       width: double.infinity,
-                      height: 100,
+                      height: 90,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).primaryBackground,
                       ),
@@ -543,7 +543,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     Divider(),
                     Container(
                       width: double.infinity,
-                      height: 80,
+                      height: 90,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).primaryBackground,
                       ),

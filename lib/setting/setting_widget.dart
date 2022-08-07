@@ -159,7 +159,7 @@ class _SettingWidgetState extends State<SettingWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -226,7 +226,7 @@ class _SettingWidgetState extends State<SettingWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -293,7 +293,7 @@ class _SettingWidgetState extends State<SettingWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -360,7 +360,7 @@ class _SettingWidgetState extends State<SettingWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -427,7 +427,7 @@ class _SettingWidgetState extends State<SettingWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -494,7 +494,7 @@ class _SettingWidgetState extends State<SettingWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -561,7 +561,7 @@ class _SettingWidgetState extends State<SettingWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -628,7 +628,7 @@ class _SettingWidgetState extends State<SettingWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                       child: InkWell(
                         onTap: () async {
                           await Navigator.push(
