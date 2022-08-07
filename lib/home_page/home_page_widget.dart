@@ -11,6 +11,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../on_boaring_page/on_boaring_page_widget.dart';
 import '../profile/profile_widget.dart';
+import '../setting/setting_widget.dart';
 import '../twitterfor_professionals/twitterfor_professionals_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -557,15 +558,25 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 5, 0, 0),
-                                  child: Text(
-                                    'Setting and privacy',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Poppins',
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w500,
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => SettingWidget(),
                                         ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'Setting and privacy',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ],
